@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: bussinesunit-service
+server:
+  port: 8081
