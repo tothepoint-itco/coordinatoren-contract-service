@@ -1,8 +1,13 @@
 spring:
   application:
     name: contract-service
+  jackson:
+      serialization:
+        write_dates_as_timestamps: false
+
 server:
   port: 8081
+
 logging:
   level:
     root: WARN
