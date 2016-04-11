@@ -6,10 +6,10 @@ public class Notification {
     private String title;
     private LocalDateTime dateTimeStamp;
 
-    Notification() {
+    protected Notification() {
     }
 
-    Notification(String title) {
+    public Notification(String title) {
         this.title = title;
         this.dateTimeStamp = LocalDateTime.now();
     }

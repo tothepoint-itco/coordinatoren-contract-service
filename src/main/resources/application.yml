@@ -3,6 +3,10 @@ spring:
     name: contract-service
 server:
   port: 8081
+logging:
+  level:
+    root: WARN
+    company.tothepoint: DEBUG
 ---
 
 spring:
