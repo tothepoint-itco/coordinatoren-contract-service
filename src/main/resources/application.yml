@@ -1,5 +1,17 @@
 spring:
   application:
-    name: bussinesunit-service
+    name: contract-service
 server:
   port: 8081
+---
+
+spring:
+  profiles: docker
+  data:
+    mongodb:
+      host: contract-mongo
+  rabbitmq:
+      host: rabbitmq
+app:
+  rabbitmq:
+      host: rabbitmq
