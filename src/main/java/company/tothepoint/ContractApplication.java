@@ -7,9 +7,11 @@ import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
+@EnableDiscoveryClient
 public class ContractApplication {
 	private static final String CONTRACT_QUEUE = "contract-queue";
 	private static final String BUSINESSUNIT_EXCHANGE = "businessunit-exchange";
