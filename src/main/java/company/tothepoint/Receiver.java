@@ -2,9 +2,13 @@ package company.tothepoint;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import company.tothepoint.model.Notification;
+import company.tothepoint.model.bediende.BediendeCreatedNotification;
+import company.tothepoint.model.bediende.BediendeDeletedNotification;
+import company.tothepoint.model.bediende.BediendeUpdatedNotification;
 import company.tothepoint.model.businessunit.BusinessUnitCreatedNotification;
 import company.tothepoint.model.businessunit.BusinessUnitDeletedNotification;
 import company.tothepoint.model.businessunit.BusinessUnitUpdatedNotification;
+import company.tothepoint.repository.BediendeRepository;
 import company.tothepoint.repository.BusinessUnitRepository;
 import company.tothepoint.repository.ContractRepository;
 import org.slf4j.Logger;
@@ -25,6 +29,9 @@ class Receiver implements MessageListener {
 
     @Autowired
     private BusinessUnitRepository businessUnitRepository;
+
+    @Autowired
+    private BediendeRepository bediendeRepository;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -86,6 +93,55 @@ class Receiver implements MessageListener {
                     );
 
                     break;
+
+
+                case "bediendeCreated":
+                    LOG.debug("EVENT RECEIVED: A bediende was created!");
+                    Optional<BediendeCreatedNotification> newBediende;
+
+                    try {
+                        newBediende = Optional.of(objectMapper.readValue(message.getBody(), BediendeCreatedNotification.class));
+                    } catch (IOException e) {
+                        newBediende = Optional.empty();
+                    }
+
+                    newBediende.ifPresent( bediendeToCreate ->
+                        bediendeRepository.save(bediendeToCreate.getCreatedBediende())
+                    );
+                    break;
+
+                case "bediendeUpdated":
+                    LOG.debug("EVENT RECEIVED: A bediende was updated!");
+                    Optional<BediendeUpdatedNotification> updatedBediende;
+
+                    try {
+                        updatedBediende = Optional.of(objectMapper.readValue(message.getBody(), BediendeUpdatedNotification.class));
+                    } catch (IOException e) {
+                        updatedBediende = Optional.empty();
+                    }
+
+                    updatedBediende.ifPresent( bediendeToUpdate ->
+                            bediendeRepository.save(bediendeToUpdate.getUpdatedBediende())
+                    );
+                    break;
+
+                case "bediendeDeleted":
+                    LOG.debug("EVENT RECEIVED: A bediende was deleted!");
+                    Optional<BediendeDeletedNotification> deletedBediende;
+
+                    try {
+                        deletedBediende = Optional.of(objectMapper.readValue(message.getBody(), BediendeDeletedNotification.class));
+                    } catch (IOException e) {
+                        deletedBediende = Optional.empty();
+                    }
+
+                    deletedBediende.ifPresent( bediendeToDelete ->
+                            businessUnitRepository.delete(bediendeToDelete.getDeletedBediendeId())
+                    );
+
+                    break;
+
+
                 default:
                     LOG.debug("EVENT RECEIVED: Unknown event!");
             }
