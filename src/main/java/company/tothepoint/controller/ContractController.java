@@ -1,8 +1,11 @@
 package company.tothepoint.controller;
 
-import company.tothepoint.model.Contract;
+import company.tothepoint.model.bediende.Bediende;
+import company.tothepoint.model.businessunit.BusinessUnit;
+import company.tothepoint.model.contract.Contract;
+import company.tothepoint.repository.BediendeRepository;
+import company.tothepoint.repository.BusinessUnitRepository;
 import company.tothepoint.repository.ContractRepository;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +15,16 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/business-units")
+@RequestMapping("/contracts")
 public class ContractController {
     @Autowired
     private ContractRepository contractRepository;
+
+    @Autowired
+    private BusinessUnitRepository businessUnitRepository;
+
+    @Autowired
+    private BediendeRepository bediendeRepository;
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Contract>> getAllContracts() {
@@ -35,17 +44,25 @@ public class ContractController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Contract> createContract(@RequestBody Contract contract) {
-        return new ResponseEntity<>(contractRepository.save(contract), HttpStatus.CREATED);
+
+        Optional<BusinessUnit> businessUnitOption = Optional.ofNullable(businessUnitRepository.findOne(contract.getBusinessUnitId()));
+        Optional<Bediende> bediendeOption = Optional.ofNullable(bediendeRepository.findOne(contract.getBediendeId()));
+
+        return businessUnitOption.flatMap( businessUnit -> {
+            return bediendeOption.map( bediende -> {
+                return new ResponseEntity<>(contractRepository.save(contract), HttpStatus.CREATED);
+            });
+        }).orElse( new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
     public ResponseEntity<Contract> updateContract(@PathVariable("id") String id, @RequestBody Contract contract) {
         Optional<Contract> existingContract = Optional.ofNullable(contractRepository.findOne(id));
 
-        return existingContract.map(bu ->
+        return existingContract.map(c ->
             {
-                bu.setNaam(contract.getNaam());
-                return new ResponseEntity<>(contractRepository.save(bu), HttpStatus.OK);
+                contract.setId(c.getId());
+                return new ResponseEntity<>(contractRepository.save(contract), HttpStatus.OK);
             }
         ).orElse(
             new ResponseEntity<>(HttpStatus.NOT_FOUND)

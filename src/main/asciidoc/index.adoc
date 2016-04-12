@@ -1,4 +1,4 @@
-= BusinessUnit-service Getting Started Guide
+= Contract-service Getting Started Guide
 Kaj Van der Hallen;
 :doctype: book
 :icons: font
@@ -10,14 +10,14 @@ Kaj Van der Hallen;
 [introduction]
 = Introduction
 
-BusinessUnit-service is a RESTful microservice for managing the Business Units.
+Contract-service is a RESTful microservice for managing the Contracts.
 
 [[overview]]
 = Overview
 
 [[overview-http-verbs]]
 == HTTP verbs
-BusinessUnit-service tries to adhere as closely as possible to standard HTTP and REST conventions in its
+Contract-service tries to adhere as closely as possible to standard HTTP and REST conventions in its
 use of HTTP verbs.
 |===
 | Verb | Usage
@@ -40,7 +40,7 @@ use of HTTP verbs.
 
 [[overview-http-status-codes]]
 == HTTP status codes
-BusinessUnit-service tries to adhere as closely as possible to standard HTTP and REST conventions in its
+Contract-service tries to adhere as closely as possible to standard HTTP and REST conventions in its
 use of HTTP status codes.
 
 |===
@@ -72,71 +72,71 @@ use of HTTP status codes.
 = Resources
 
 
-[[resources-business-unit]]
-== BusinessUnit
-The BusinessUnit resource is used to create, modify and list business units.
+[[resources-contract-unit]]
+== Contract
+The Contract resource is used to create, modify and list contracts.
 
 
-[[resource-business-unit-list]]
-=== Listing business units
-A `GET` request lists all of the service's business units.
+[[resource-contract-list]]
+=== Listing contracts
+A `GET` request lists all of the service's contracts.
 
-include::{snippets}/list-business-units/response-fields.adoc[]
+include::{snippets}/list-contracts/response-fields.adoc[]
 
 ==== Example request
 
-include::{snippets}/list-business-units/curl-request.adoc[]
+include::{snippets}/list-contracts/curl-request.adoc[]
 
 ==== Example response
 
-include::{snippets}/list-business-units/http-response.adoc[]
+include::{snippets}/list-contracts/http-response.adoc[]
 
 
-[[resource-business-unit-get]]
+[[resource-contract-get]]
 === Fetching people
 A `GET` request fetches a specific person.
 
-include::{snippets}/get-business-unit/response-fields.adoc[]
+include::{snippets}/get-contract/response-fields.adoc[]
 
 ==== Example request
 
-include::{snippets}/get-business-unit/curl-request.adoc[]
+include::{snippets}/get-contract/curl-request.adoc[]
 
 ==== Example response
 
-include::{snippets}/get-business-unit/http-response.adoc[]
+include::{snippets}/get-contract/http-response.adoc[]
 
 
-[[resource-business-unit-create]]
+[[resource-contract-create]]
 === Creating people
-A `POST` request creates a new business unit.
+A `POST` request creates a new contract unit.
 
 ==== Request structure
 
-include::{snippets}/create-business-unit/request-fields.adoc[]
+include::{snippets}/create-contract/request-fields.adoc[]
 
 ==== Example request
 
-include::{snippets}/create-business-unit/curl-request.adoc[]
+include::{snippets}/create-contract/curl-request.adoc[]
 
 ==== Example response
 
-include::{snippets}/create-business-unit/http-response.adoc[]
+include::{snippets}/create-contract/http-response.adoc[]
 
 
-[[resource-business-unit-update]]
+[[resource-contract-update]]
 === Updating people
-A `PUT` request updates an existing business unit.
+A `PUT` request updates an existing contract.
 
 ==== Request structure
 
-include::{snippets}/create-business-unit/request-fields.adoc[]
+include::{snippets}/create-contract/request-fields.adoc[]
 
 ==== Example request
 
-include::{snippets}/update-business-unit/curl-request.adoc[]
+include::{snippets}/update-contract/curl-request.adoc[]
 
 ==== Example response
 
-include::{snippets}/update-business-unit/http-response.adoc[]
+include::{snippets}/update-contract/http-response.adoc[]
 

@@ -18,6 +18,8 @@ public class ContractApplication {
 	private static final String BUSINESSUNIT_ROUTING = "businessunit-routing";
 	private static final String BEDIENDE_EXCHANGE = "bediende-exchange";
 	private static final String BEDIENDE_ROUTING = "bediende-routing";
+	private static final String CONTRACT_EXCHANGE = "contract-exchange";
+	private static final String CONTRACT_ROUTING = "contract-routing";
 
 	public static void main(String[] args) {
 		SpringApplication.run(ContractApplication.class, args);
@@ -51,6 +53,11 @@ public class ContractApplication {
 	}
 
 	@Bean
+	TopicExchange contractTopicExchange() {
+		return new TopicExchange(CONTRACT_EXCHANGE, true, false);
+	}
+
+	@Bean
 	Binding businessUnitBinding(Queue queue, TopicExchange businessUnitTopicExchange) {
 		return BindingBuilder.bind(queue).to(businessUnitTopicExchange).with(BUSINESSUNIT_ROUTING);
 	}
@@ -58,6 +65,11 @@ public class ContractApplication {
 	@Bean
 	Binding bediendeBinding(Queue queue, TopicExchange bediendeTopicExchange) {
 		return BindingBuilder.bind(queue).to(bediendeTopicExchange).with(BEDIENDE_ROUTING);
+	}
+
+	@Bean
+	Binding contractBinding(Queue queue, TopicExchange contractTopicExchange) {
+		return BindingBuilder.bind(queue).to(contractTopicExchange).with(CONTRACT_ROUTING);
 	}
 
 	@Bean
