@@ -170,6 +170,36 @@ public class ContractControllerTest {
     }
 
     @Test
+    public void createContractWithInvalidBediendeIdShouldReturnBadRequest() throws Exception {
+        BusinessUnit businessUnit = businessUnitRepository.save(new BusinessUnit("ToThePoint"));
+        Map<String, String> newContract = new HashMap<>();
+        newContract.put("bediendeId", "bed01");
+        newContract.put("businessUnitId", businessUnit.getId());
+        newContract.put("startDatum", "2016-04-12");
+
+        this.mockMvc.perform(
+                post("/contracts").contentType(MediaType.APPLICATION_JSON).content(
+                        this.objectMapper.writeValueAsString(newContract)
+                )
+        ).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void createContractWithInvalidBusinessIdShouldReturnBadRequest() throws Exception {
+        Bediende bediende = bediendeRepository.save(new Bediende("Kaj", "Van der Hallen", LocalDate.of(1993,8,29)));
+        Map<String, String> newContract = new HashMap<>();
+        newContract.put("bediendeId", bediende.getId());
+        newContract.put("businessUnitId", "bus01");
+        newContract.put("startDatum", "2016-04-12");
+
+        this.mockMvc.perform(
+                post("/contracts").contentType(MediaType.APPLICATION_JSON).content(
+                        this.objectMapper.writeValueAsString(newContract)
+                )
+        ).andExpect(status().isBadRequest());
+    }
+
+    @Test
     public void updateContract() throws Exception {
         BusinessUnit businessUnit = businessUnitRepository.save(new BusinessUnit("ToThePoint"));
         Bediende bediende = bediendeRepository.save(new Bediende("Kaj", "Van der Hallen", LocalDate.of(1993,8,29)));

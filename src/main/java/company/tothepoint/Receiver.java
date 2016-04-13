@@ -136,7 +136,7 @@ class Receiver implements MessageListener {
                     }
 
                     deletedBediende.ifPresent( bediendeToDelete ->
-                            businessUnitRepository.delete(bediendeToDelete.getDeletedBediendeId())
+                            bediendeRepository.delete(bediendeToDelete.getDeletedBediendeId())
                     );
 
                     break;
