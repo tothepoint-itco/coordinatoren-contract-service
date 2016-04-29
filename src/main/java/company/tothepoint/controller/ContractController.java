@@ -27,8 +27,18 @@ public class ContractController {
     private BediendeRepository bediendeRepository;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Contract>> getAllContracts() {
-        return new ResponseEntity<>(contractRepository.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<Contract>> getAllContracts(@RequestParam(required = false) String bediendeId) {
+        //Optional<String> bediendeOption = Optional.ofNullable(bediendeId);
+
+        if(bediendeId != null){
+                    Optional<List<Contract>> contractOption = Optional.ofNullable(contractRepository.findByBediendeId(bediendeId));
+                     return contractOption.map(contract ->
+                            new ResponseEntity<List<Contract>>(contract, HttpStatus.OK)
+                    ).orElse(
+                            new ResponseEntity<List<Contract>>(HttpStatus.NOT_FOUND)
+                    );
+                }
+        else{ return new ResponseEntity<List<Contract>>(contractRepository.findAll(), HttpStatus.OK);}
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
