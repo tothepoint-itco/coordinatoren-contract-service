@@ -140,3 +140,74 @@ include::{snippets}/update-contract/curl-request.adoc[]
 
 include::{snippets}/update-contract/http-response.adoc[]
 
+
+[[resources-bediende-unit]]
+== Bediende
+The Bediende resource is used to create, modify and list bediendes.
+
+
+[[resource-bediende-list]]
+=== Listing bediendes
+A `GET` request lists all of the service's bediendes.
+
+include::{snippets}/list-bediendes/response-fields.adoc[]
+
+==== Example request
+
+include::{snippets}/list-bediendes/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/list-bediendes/http-response.adoc[]
+
+
+[[resource-bediende-get]]
+=== Fetching people
+A `GET` request fetches a specific person.
+
+include::{snippets}/get-bediende/response-fields.adoc[]
+
+==== Example request
+
+include::{snippets}/get-bediende/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/get-bediende/http-response.adoc[]
+
+
+[[resource-bediende-create]]
+=== Creating people
+A `POST` request creates a new bediende unit.
+
+==== Request structure
+
+include::{snippets}/create-bediende/request-fields.adoc[]
+
+==== Example request
+
+include::{snippets}/create-bediende/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/create-bediende/http-response.adoc[]
+
+
+[[resource-bediende-update]]
+=== Updating people
+A `PUT` request updates an existing bediende.
+
+==== Request structure
+
+include::{snippets}/create-bediende/request-fields.adoc[]
+
+==== Example request
+
+include::{snippets}/update-bediende/curl-request.adoc[]
+
+==== Example response
+
+include::{snippets}/update-bediende/http-response.adoc[]
+
+
+

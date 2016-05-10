@@ -163,7 +163,7 @@ public class ContractControllerTest {
     @Test
     public void createContract() throws Exception {
         BusinessUnit businessUnit = businessUnitRepository.save(new BusinessUnit("ToThePoint"));
-        Bediende bediende = bediendeRepository.save(new Bediende("Kaj", "Van der Hallen", LocalDate.of(1993,8,29)));
+        Bediende bediende = bediendeRepository.save(new Bediende("Kaj", "Van der Hallen", LocalDate.of(1993,8,29),"035691011"));
 
         Map<String, String> newContract = new HashMap<>();
         newContract.put("bediendeId", bediende.getId());
@@ -205,7 +205,7 @@ public class ContractControllerTest {
 
     @Test
     public void createContractWithInvalidBusinessIdShouldReturnBadRequest() throws Exception {
-        Bediende bediende = bediendeRepository.save(new Bediende("Kaj", "Van der Hallen", LocalDate.of(1993,8,29)));
+        Bediende bediende = bediendeRepository.save(new Bediende("Kaj", "Van der Hallen", LocalDate.of(1993,8,29),"035691011"));
         Map<String, String> newContract = new HashMap<>();
         newContract.put("bediendeId", bediende.getId());
         newContract.put("businessUnitId", "bus01");
@@ -221,7 +221,7 @@ public class ContractControllerTest {
     @Test
     public void updateContract() throws Exception {
         BusinessUnit businessUnit = businessUnitRepository.save(new BusinessUnit("ToThePoint"));
-        Bediende bediende = bediendeRepository.save(new Bediende("Kaj", "Van der Hallen", LocalDate.of(1993,8,29)));
+        Bediende bediende = bediendeRepository.save(new Bediende("Kaj", "Van der Hallen", LocalDate.of(1993,8,29),"035691011"));
 
         Contract originalContract = contractRepository.save(new Contract(bediende.getId(), businessUnit.getId(), LocalDate.of(2016,4,12)));
 

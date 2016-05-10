@@ -21,14 +21,25 @@ public class Bediende {
 
     @NotNull
     private LocalDate geboorteDatum;
+    @NotNull
+    private String telefoonNummer;
 
     public Bediende() {
     }
 
-    public Bediende(String voorNaam, String familieNaam, LocalDate geboorteDatum) {
+    public Bediende(String voorNaam, String familieNaam, LocalDate geboorteDatum, String telefoonNummer) {
         this.voorNaam = voorNaam;
         this.familieNaam = familieNaam;
         this.geboorteDatum = geboorteDatum;
+        this.telefoonNummer = telefoonNummer;
+    }
+
+    public String getTelefoonNummer() {
+        return telefoonNummer;
+    }
+
+    public void setTelefoonNummer(String telefoonNummer) {
+        this.telefoonNummer = telefoonNummer;
     }
 
     public String getId() {
