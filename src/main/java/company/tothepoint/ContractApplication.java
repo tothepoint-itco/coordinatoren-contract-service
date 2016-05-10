@@ -3,6 +3,7 @@ package company.tothepoint;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.boot.SpringApplication;
@@ -40,6 +41,13 @@ public class ContractApplication {
 		Jackson2JsonMessageConverter jackson2JsonMessageConverter = new Jackson2JsonMessageConverter();
 		jackson2JsonMessageConverter.setJsonObjectMapper(objectMapper);
 		return jackson2JsonMessageConverter;
+	}
+
+	@Bean
+	RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory, Jackson2JsonMessageConverter jackson2JsonMessageConverter) {
+		RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+		rabbitTemplate.setMessageConverter(jackson2JsonMessageConverter);
+		return rabbitTemplate;
 	}
 
 	@Bean
