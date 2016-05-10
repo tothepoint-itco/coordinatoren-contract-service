@@ -51,6 +51,16 @@ public class ContractApplication {
 	}
 
 	@Bean
+	String exchangeName() {
+		return CONTRACT_EXCHANGE;
+	}
+
+	@Bean
+	String routingKey() {
+		return CONTRACT_ROUTING;
+	}
+
+	@Bean
 	TopicExchange businessUnitTopicExchange() {
 		return new TopicExchange(BUSINESSUNIT_EXCHANGE, true, false);
 	}
