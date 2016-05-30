@@ -127,7 +127,7 @@ public class BediendeControllerTest {
         Map<String, String> newBediende = new HashMap<>();
         newBediende.put("voorNaam", "Kaj");
         newBediende.put("familieNaam", "Van der Hallen");
-        newBediende.put("geboorteDatum", "1993-08-29");
+        newBediende.put("geboorteDatum", "29/08/1993");
         newBediende.put("telefoonNummer", "035691011");
 
         ConstrainedFields fields = new ConstrainedFields(Bediende.class);
@@ -155,7 +155,7 @@ public class BediendeControllerTest {
         Map<String, String> updatedBediende = new HashMap<>();
         updatedBediende.put("voorNaam", "Butrint");
         updatedBediende.put("familieNaam", "Zymberi");
-        updatedBediende.put("geboorteDatum", "1992-03-24");
+        updatedBediende.put("geboorteDatum", "24/08/1992");
         updatedBediende.put("telefoonNummer", "035691011");
 
         ConstrainedFields fields = new ConstrainedFields(Bediende.class);

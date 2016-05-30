@@ -1,6 +1,7 @@
 package company.tothepoint.model.contract;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotNull;
@@ -19,9 +20,11 @@ public class Contract {
     private String businessUnitId;
 
     @NotNull
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate startDatum;
 
     @NotNull
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate eindDatum;
 
 

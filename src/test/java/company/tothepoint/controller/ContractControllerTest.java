@@ -168,7 +168,7 @@ public class ContractControllerTest {
         Map<String, String> newContract = new HashMap<>();
         newContract.put("bediendeId", bediende.getId());
         newContract.put("businessUnitId", businessUnit.getId());
-        newContract.put("startDatum", "2016-04-12");
+        newContract.put("startDatum", "12/04/2016");
 
         ConstrainedFields fields = new ConstrainedFields(Contract.class);
 
@@ -194,7 +194,7 @@ public class ContractControllerTest {
         Map<String, String> newContract = new HashMap<>();
         newContract.put("bediendeId", "bed01");
         newContract.put("businessUnitId", businessUnit.getId());
-        newContract.put("startDatum", "2016-04-12");
+        newContract.put("startDatum", "12/04/2016");
 
         this.mockMvc.perform(
                 post("/contracts").contentType(MediaType.APPLICATION_JSON).content(
@@ -209,7 +209,7 @@ public class ContractControllerTest {
         Map<String, String> newContract = new HashMap<>();
         newContract.put("bediendeId", bediende.getId());
         newContract.put("businessUnitId", "bus01");
-        newContract.put("startDatum", "2016-04-12");
+        newContract.put("startDatum", "12/04/2016");
 
         this.mockMvc.perform(
                 post("/contracts").contentType(MediaType.APPLICATION_JSON).content(
@@ -228,7 +228,7 @@ public class ContractControllerTest {
         Map<String, String> updatedContract = new HashMap<>();
         updatedContract.put("bediendeId", bediende.getId());
         updatedContract.put("businessUnitId", businessUnit.getId());
-        updatedContract.put("startDatum", "2016-04-14");
+        updatedContract.put("startDatum", "12/04/2016");
 
         ConstrainedFields fields = new ConstrainedFields(Contract.class);
 
