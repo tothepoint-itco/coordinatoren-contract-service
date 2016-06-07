@@ -13,8 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by butrint on 6/05/16.
@@ -39,7 +41,13 @@ public class BediendeController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Bediende>> getAllBediendes() {
         LOG.debug("GET /bediendes getAllBediendes() called!");
-        return new ResponseEntity<>(bediendeRepository.findAll(), HttpStatus.OK);
+
+        List<Bediende> orderedList = bediendeRepository.findAll().stream()
+                .sorted((o1, o2) -> o1.getFamilieNaam().compareTo(o2.getFamilieNaam()))
+                .sorted(((o1, o2) -> o1.getVoorNaam().compareTo(o2.getVoorNaam())))
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(orderedList, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
