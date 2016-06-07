@@ -20,11 +20,8 @@ public class Contract {
     private String businessUnitId;
 
     @NotNull
-    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate startDatum;
 
-    @NotNull
-    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate eindDatum;
 
 
@@ -68,18 +65,22 @@ public class Contract {
         this.businessUnitId = businessUnitId;
     }
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     public LocalDate getStartDatum() {
         return startDatum;
     }
 
+    @JsonFormat(pattern = "d/M/yyyy")
     public void setStartDatum(LocalDate startDatum) {
         this.startDatum = startDatum;
     }
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     public LocalDate getEindDatum() {
         return eindDatum;
     }
 
+    @JsonFormat(pattern = "d/M/yyyy")
     public void setEindDatum(LocalDate eindDatum) {
         this.eindDatum = eindDatum;
     }

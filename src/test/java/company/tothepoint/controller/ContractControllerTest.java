@@ -101,30 +101,30 @@ public class ContractControllerTest {
         bediendeRepository.save(originalBediendeData);
     }
 
-//    @Test
-//    public void listContracts() throws Exception {
-//        new Contract("bed01", "bus01", LocalDate.of(2016, 04, 12));
-//        contractRepository.save(new Contract("bed01", "bus01", LocalDate.of(2016, 04, 12)));
-//        contractRepository.save(new Contract("bed02", "bus03", LocalDate.of(2016, 04, 10), LocalDate.of(2016, 05, 10)));
-//
-//        this.document.snippets(
-//                responseFields(
-//                        fieldWithPath("[].id").description("The contract's unique identifier"),
-//                        fieldWithPath("[].bediendeId").description("The unique identifier of the bediende"),
-//                        fieldWithPath("[].businessUnitId").description("The unique identifier of the business unit"),
-//                        fieldWithPath("[].startDatum").description("The startdate of the contract"),
-//                        fieldWithPath("[].eindDatum").description("The enddate of the contract").optional().type(String.class)
-//                )
-//        );
-//
-//        this.mockMvc.perform(
-//                get("/contracts").accept(MediaType.APPLICATION_JSON)
-//        ).andExpect(status().isOk());
-//    }
+    @Test
+    public void listContracts() throws Exception {
+        new Contract("bed01", "bus01", LocalDate.of(2016, 04, 12));
+        contractRepository.save(new Contract("bed01", "bus01", LocalDate.of(2016, 4, 12)));
+        contractRepository.save(new Contract("bed02", "bus03", LocalDate.of(2016, 4, 10), LocalDate.of(2016, 05, 10)));
+
+        this.document.snippets(
+                responseFields(
+                        fieldWithPath("[].id").description("The contract's unique identifier"),
+                        fieldWithPath("[].bediendeId").description("The unique identifier of the bediende"),
+                        fieldWithPath("[].businessUnitId").description("The unique identifier of the business unit"),
+                        fieldWithPath("[].startDatum").description("The startdate of the contract"),
+                        fieldWithPath("[].eindDatum").description("The enddate of the contract").optional().type(String.class)
+                )
+        );
+
+        this.mockMvc.perform(
+                get("/contracts").accept(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk());
+    }
 
     @Test
     public void getContract() throws Exception {
-        Contract contract = contractRepository.save(new Contract("bed02", "bus03", LocalDate.of(2016, 04, 10), LocalDate.of(2016, 05, 10)));
+        Contract contract = contractRepository.save(new Contract("bed02", "bus03", LocalDate.of(2016, 4, 10), LocalDate.of(2016, 5, 10)));
 
         this.document.snippets(
                 responseFields(
@@ -141,24 +141,24 @@ public class ContractControllerTest {
         ).andExpect(status().isOk());
     }
 
-    // @Test
-    // public void getContractByBediendeId() throws Exception {
-    //     Contract contract = contractRepository.save(new Contract("bed02", "bus03", LocalDate.of(2016, 04, 10), LocalDate.of(2016, 05, 10)));
-    //
-    //     this.document.snippets(
-    //             responseFields(
-    //                     fieldWithPath("id").description("The contract's unique identifier"),
-    //                     fieldWithPath("bediendeId").description("The unique identifier of the bediende"),
-    //                     fieldWithPath("businessUnitId").description("The unique identifier of the business unit"),
-    //                     fieldWithPath("startDatum").description("The startdate of the contract"),
-    //                     fieldWithPath("eindDatum").description("The enddate of the contract").optional()
-    //             )
-    //     );
-    //
-    //     this.mockMvc.perform(
-    //             get("/contracts/contract/"+contract.getBediendeId()).accept(MediaType.APPLICATION_JSON)
-    //     ).andExpect(status().isOk());
-    // }
+     @Test
+     public void getContractByBediendeId() throws Exception {
+         Contract contract = contractRepository.save(new Contract("bed02", "bus03", LocalDate.of(2016, 04, 10), LocalDate.of(2016, 05, 10)));
+
+         this.document.snippets(
+                 responseFields(
+                         fieldWithPath("id").description("The contract's unique identifier"),
+                         fieldWithPath("bediendeId").description("The unique identifier of the bediende"),
+                         fieldWithPath("businessUnitId").description("The unique identifier of the business unit"),
+                         fieldWithPath("startDatum").description("The startdate of the contract"),
+                         fieldWithPath("eindDatum").description("The enddate of the contract").optional()
+                 )
+         );
+
+         this.mockMvc.perform(
+                 get("/contracts/contract/"+contract.getBediendeId()).accept(MediaType.APPLICATION_JSON)
+         ).andExpect(status().isOk());
+     }
 
     @Test
     public void createContract() throws Exception {
@@ -168,7 +168,7 @@ public class ContractControllerTest {
         Map<String, String> newContract = new HashMap<>();
         newContract.put("bediendeId", bediende.getId());
         newContract.put("businessUnitId", businessUnit.getId());
-        newContract.put("startDatum", "12/04/2016");
+        newContract.put("startDatum", "2/4/2016");
 
         ConstrainedFields fields = new ConstrainedFields(Contract.class);
 
