@@ -1,6 +1,7 @@
 package company.tothepoint.model.bediende;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotNull;
@@ -20,6 +21,7 @@ public class Bediende {
     private String familieNaam;
 
     @NotNull
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate geboorteDatum;
     @NotNull
     private String telefoonNummer;
