@@ -3,6 +3,7 @@ package company.tothepoint.controller;
 import company.tothepoint.model.bediende.Bediende;
 import company.tothepoint.model.businessunit.BusinessUnit;
 import company.tothepoint.model.contract.Contract;
+import company.tothepoint.model.contract.ContractAggregate;
 import company.tothepoint.repository.BediendeRepository;
 import company.tothepoint.repository.BusinessUnitRepository;
 import company.tothepoint.repository.ContractRepository;
@@ -11,8 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/contracts")
@@ -39,6 +42,20 @@ public class ContractController {
                     );
                 }
         else{ return new ResponseEntity<List<Contract>>(contractRepository.findAll(), HttpStatus.OK);}
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/aggregated")
+    public ResponseEntity<List<ContractAggregate>> getAllAggregatedContracts() {
+        List<ContractAggregate> aggregatedContracts = contractRepository.findAll().stream()
+                .sorted((o1, o2) -> o1.getBediendeId().compareTo(o2.getBediendeId()))
+                .map(this::aggregateContract)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .sorted(byContractStartDate)
+                .sorted(((o1, o2) -> o1.getBediende().getFamilieNaam().compareTo(o2.getBediende().getFamilieNaam())))
+                .sorted(((o1, o2) -> o1.getBediende().getVoorNaam().compareTo(o2.getBediende().getVoorNaam())))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(aggregatedContracts, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
@@ -88,4 +105,19 @@ public class ContractController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    private Optional<ContractAggregate> aggregateContract(Contract contract) {
+        Optional<Bediende> bediendeOption = Optional.ofNullable(bediendeRepository.findOne(contract.getBediendeId()));
+
+        return bediendeOption.map(bediende -> {
+            return new ContractAggregate(contract, bediende);
+        });
+    }
+
+    Comparator<ContractAggregate> byContractStartDate = (o1, o2) -> {
+        if (o1.getContract().getStartDatum().isBefore(o2.getContract().getStartDatum()))
+            return 1;
+        else
+            return -1;
+    };
 }
