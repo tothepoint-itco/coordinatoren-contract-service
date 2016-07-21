@@ -45,7 +45,10 @@ public class BediendeController {
     public ResponseEntity<List<Bediende>> getAllBediendes() {
         LOG.debug("GET /bediendes getAllBediendes() called!");
 
-        List<Bediende> orderedList = bediendeRepository.findAll();
+        List<Bediende> orderedList = bediendeRepository.findAll().stream()
+                .sorted((o1, o2) -> o1.getFamilieNaam().compareTo(o2.getFamilieNaam()))
+                .sorted(((o1, o2) -> o1.getVoorNaam().compareTo(o2.getVoorNaam())))
+                .collect(Collectors.toList());
 
         return new ResponseEntity<>(orderedList, HttpStatus.OK);
     }
@@ -53,6 +56,8 @@ public class BediendeController {
     @RequestMapping(method = RequestMethod.GET, value = "/aggregated")
     public ResponseEntity<List<BediendeAggregate>> getAllAggregatedBediendes() {
         List<BediendeAggregate> aggregatedBediendes = bediendeRepository.findAll().stream()
+                .sorted((o1, o2) -> o1.getFamilieNaam().compareTo(o2.getFamilieNaam()))
+                .sorted(((o1, o2) -> o1.getVoorNaam().compareTo(o2.getVoorNaam())))
                 .map(bediende -> aggregateBediende(bediende.getId()))
                 .filter(Optional::isPresent)
                 .map(Optional::get)

@@ -50,9 +50,13 @@ public class ContractController {
     @RequestMapping(method = RequestMethod.GET, value = "/aggregated")
     public ResponseEntity<List<ContractAggregate>> getAllAggregatedContracts() {
         List<ContractAggregate> aggregatedContracts = contractRepository.findAll().stream()
+                .sorted((o1, o2) -> o1.getBediendeId().compareTo(o2.getBediendeId()))
                 .map(this::aggregateContract)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
+                .sorted(byContractStartDate)
+                .sorted(((o1, o2) -> o1.getBediende().getFamilieNaam().compareTo(o2.getBediende().getFamilieNaam())))
+                .sorted(((o1, o2) -> o1.getBediende().getVoorNaam().compareTo(o2.getBediende().getVoorNaam())))
                 .collect(Collectors.toList());
         return new ResponseEntity<>(aggregatedContracts, HttpStatus.OK);
     }
