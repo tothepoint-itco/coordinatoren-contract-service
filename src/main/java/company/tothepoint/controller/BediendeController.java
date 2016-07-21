@@ -10,6 +10,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
@@ -72,7 +73,7 @@ public class BediendeController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Bediende> createBediende(@RequestBody Bediende bediende) {
+    public ResponseEntity<Bediende> createBediende(@Validated @RequestBody Bediende bediende) {
         LOG.debug("POST /bediendes createBediende(..) called!");
         Bediende createdBediende = bediendeRepository.save(bediende);
         rabbitTemplate.convertAndSend(exchangeName, routingKey, new BediendeCreatedNotification("bediendeCreated", createdBediende));
@@ -80,7 +81,7 @@ public class BediendeController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-    public ResponseEntity<Bediende> updateBediende(@PathVariable("id") String id, @RequestBody Bediende bediende) {
+    public ResponseEntity<Bediende> updateBediende(@PathVariable("id") String id, @Validated @RequestBody Bediende bediende) {
         LOG.debug("PUT /bediendes/"+id+" updateBediende("+id+", ..) called!");
         Optional<Bediende> existingBediende = Optional.ofNullable(bediendeRepository.findOne(id));
 

@@ -12,18 +12,19 @@ public class Bediende {
     @Id
     private String id;
 
-    @NotNull
-    @Size(min = 1, max = 32)
+    @NotNull(message = "bediende.error.voornaam.notnull")
+    @Size(min = 1, max = 32, message = "bediende.error.voornaam.size")
     private String voorNaam;
 
-    @NotNull
-    @Size(min = 1, max = 127)
+    @NotNull(message = "bediende.error.familienaam.notnull")
+    @Size(min = 1, max = 128, message = "bediende.error.familienaam.size")
     private String familieNaam;
 
-    @NotNull
+    @NotNull(message = "bediende.error.geboortedatum.notnull")
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate geboorteDatum;
-    @NotNull
+
+    @NotNull(message = "bediende.error.telefoonnummer.notnull")
     private String telefoonNummer;
 
     public Bediende() {

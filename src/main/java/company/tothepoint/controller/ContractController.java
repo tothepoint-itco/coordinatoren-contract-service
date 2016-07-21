@@ -10,6 +10,7 @@ import company.tothepoint.repository.ContractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
@@ -68,7 +69,7 @@ public class ContractController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Contract> createContract(@RequestBody Contract contract) {
+    public ResponseEntity<Contract> createContract(@Validated @RequestBody Contract contract) {
 
         Optional<BusinessUnit> businessUnitOption = Optional.ofNullable(businessUnitRepository.findOne(contract.getBusinessUnitId()));
         Optional<Bediende> bediendeOption = Optional.ofNullable(bediendeRepository.findOne(contract.getBediendeId()));
@@ -81,7 +82,7 @@ public class ContractController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-    public ResponseEntity<Contract> updateContract(@PathVariable("id") String id, @RequestBody Contract contract) {
+    public ResponseEntity<Contract> updateContract(@PathVariable("id") String id, @Validated @RequestBody Contract contract) {
         Optional<Contract> existingContract = Optional.ofNullable(contractRepository.findOne(id));
 
         return existingContract.map(c ->

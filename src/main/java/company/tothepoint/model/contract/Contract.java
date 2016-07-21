@@ -13,15 +13,17 @@ public class Contract {
     @Id
     private String id;
 
-    @NotNull
+    @NotNull(message = "contract.error.bediendeid.notnull")
     private String bediendeId;
 
-    @NotNull
+    @NotNull(message = "contract.error.businessunitid.notnull")
     private String businessUnitId;
 
-    @NotNull
+    @NotNull(message = "contract.error.startdatum.notnull")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate startDatum;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate eindDatum;
 
 
